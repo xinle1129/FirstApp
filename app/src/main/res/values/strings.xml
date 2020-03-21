@@ -4,4 +4,9 @@
     <string name="str">Happy Birthday !</string>
     <string name="name">Your Jayrie</string>
     <string name="bg">background</string>
+    <string name="Celsius">Celsius：</string>
+    <string name="Fahrenheit">Fahrenheit</string>
+    <string name="str1">￣￣￣￣￣￣￣￣￣￣￣</string>
+    <string name="textinput">Please input Fahrenheit</string>
+    <string name="str2">Convert</string>
 </resources>
