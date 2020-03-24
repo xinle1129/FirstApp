@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">FirstApp</string>
-    <string name="hello">Hello!</string>
-    <string name="str">Happy Birthday !</string>
-    <string name="name">Your Jayrie</string>
-    <string name="bg">background</string>
+    <string name="hello" translatable="false">Hello!</string>
+    <string name="str" translatable="false">Happy Birthday !</string>
+    <string name="name" translatable="false">Your Jayrie</string>
+    <string name="bg" translatable="false">background</string>
     <string name="Celsius">Celsius：</string>
     <string name="Fahrenheit">Fahrenheit</string>
-    <string name="str1">￣￣￣￣￣￣￣￣￣￣￣</string>
-    <string name="textinput">Please input Fahrenheit</string>
-    <string name="str2">Convert</string>
+    <string name="str1" translatable="false">￣￣￣￣￣￣￣￣￣￣￣</string>
+    <string name="textinput" translatable="false">Please input Fahrenheit</string>
+    <string name="str2" translatable="false">Convert</string>
 </resources>
