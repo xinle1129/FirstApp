@@ -9,23 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Rate2Activity">
-
-        </activity>
-
-
-        <activity android:name=".RateActivity">
+        <activity android:name=".Config"></activity>
+        <activity android:name=".Rates">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".TempActivity">
-
-        </activity>
+        <activity android:name=".Rate2Activity" />
+        <activity android:name=".RateActivity"></activity>
+        <activity android:name=".TempActivity" />
     </application>
 
 </manifest>

@@ -9,7 +9,13 @@
     <string name="str1" translatable="false">￣￣￣￣￣￣￣￣￣￣￣</string>
     <string name="textinput" translatable="false">Please input Fahrenheit</string>
     <string name="str2" translatable="false">Convert</string>
-    <string name="textInitial_rate">0.0</string>
+    <string name="textInitial_rate" translatable="false">0.0</string>
     <string name="hint_rate">Please input RMB</string>
-    <string name="yen">yen</string>
+    <string name="yen" translatable="false">yen</string>
+    <string name="dollar">dollar</string>
+    <string name="euro">euro</string>
+    <string name="won">won</string>
+    <string name="config">config</string>
+    <string name="save">save</string>
+    <string name="menu_set_label">Setting</string>
 </resources>

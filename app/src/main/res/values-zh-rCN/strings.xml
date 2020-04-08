@@ -3,4 +3,10 @@
     <string name="app_name">FirstApp</string>
     <string name="Celsius">摄氏度</string>
     <string name="Fahrenheit">华氏度</string>
+    <string name="hint_rate">请输入人民币</string>
+    <string name="euro">欧元</string>
+    <string name="dollar">美元</string>
+    <string name="won">won</string>
+    <string name="save">save</string>
+    <string name="menu_set_label">Setting</string>
 </resources>
