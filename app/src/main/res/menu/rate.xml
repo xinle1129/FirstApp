@@ -4,6 +4,7 @@
 
     <item
         android:id="@+id/menu_set"
+        android:icon="@mipmap/setting"
         android:title="@string/menu_set_label"
         app:showAsAction="always" />
 </menu>
