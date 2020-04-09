@@ -111,9 +111,9 @@ public class Rates extends AppCompatActivity implements Runnable{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.i("woqu","cao");
-        Log.i("woqu","requestcode"+requestCode);
-        Log.i("woqu","resultcode"+resultCode);
-       // if (requestCode==1 && requestCode==2){
+        Log.i("woqu","requestcode="+requestCode);
+        Log.i("woqu","resultcode="+resultCode);
+        if (requestCode==1&&resultCode==2){
             Log.i("woqu","cao1");
             Bundle bundle = data.getExtras();
             Log.i("woqu","cao2");
@@ -130,7 +130,7 @@ public class Rates extends AppCompatActivity implements Runnable{
             editor.putFloat("euro_rate",euroRate);
             editor.putFloat("won_rate",wonRate);
             editor.commit();//保存，commit要等待，apply不用
-      //  }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
