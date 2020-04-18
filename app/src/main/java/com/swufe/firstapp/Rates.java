@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Rates extends AppCompatActivity implements Runnable{
     private final String TAG = "Rate";
@@ -36,18 +38,22 @@ public class Rates extends AppCompatActivity implements Runnable{
     EditText rmb;
     TextView show;
     Handler handler;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rates);
         rmb = (EditText)findViewById(R.id.textInput_rates);
         show = (TextView)findViewById(R.id.textOut_rates);
+
         //获取SP里保存的数据
         SharedPreferences sharedPreferences = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
         //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);//这样也可以，但是不能改名，只能有一个
         dollarRate = sharedPreferences.getFloat("dollar_rate",0.0f);
         euroRate = sharedPreferences.getFloat("euro_rate",0.0f);
         wonRate = sharedPreferences.getFloat("won_rate",0.0f);
+        date = sharedPreferences.getString("date","");
+
 
         //开启子线程
         Thread thread = new Thread(this);//要有this，才能找到run()
@@ -56,7 +62,11 @@ public class Rates extends AppCompatActivity implements Runnable{
         handler = new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {//这样就不用单独创建一个类
-                if(msg.what==5){
+                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+                //获取当前时间日期
+                String date0 = formatter.format(new Date(System.currentTimeMillis()));
+                Log.i(TAG,"date:"+date);
+                if(msg.what==5&&!date0.equals(date)){
                     //String str = (String) msg.obj;
                     Bundle bd1 = (Bundle)msg.obj;
                     //Log.i(TAG,"handleMessage : getMessage msg = "+ str);
@@ -67,6 +77,15 @@ public class Rates extends AppCompatActivity implements Runnable{
                     Log.i(TAG,"handleMessage : dollarRate = "+ dollarRate );
                     Log.i(TAG,"handleMessage : euroRate = "+ euroRate );
                     Log.i(TAG,"handleMessage : wonRate = "+ wonRate );
+
+                    //更新date,保存date和汇率
+                    SharedPreferences sharedPreferences = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("date",date0);
+                    editor.putFloat("dollar_rate",dollarRate);
+                    editor.putFloat("euro_rate",euroRate);
+                    editor.putFloat("won_rate",wonRate);
+                    editor.commit();//保存，commit要等待，apply不用
 
                     Toast.makeText(Rates.this,"汇率已更新",Toast.LENGTH_SHORT).show();
                 }
