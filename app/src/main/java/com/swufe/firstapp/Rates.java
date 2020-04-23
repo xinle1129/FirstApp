@@ -38,7 +38,7 @@ public class Rates extends AppCompatActivity implements Runnable{
     EditText rmb;
     TextView show;
     Handler handler;
-    String date;
+    String updateDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,21 +52,27 @@ public class Rates extends AppCompatActivity implements Runnable{
         dollarRate = sharedPreferences.getFloat("dollar_rate",0.0f);
         euroRate = sharedPreferences.getFloat("euro_rate",0.0f);
         wonRate = sharedPreferences.getFloat("won_rate",0.0f);
-        date = sharedPreferences.getString("date","");
+        updateDate = sharedPreferences.getString("update_date","");
+        //获取当前系统时间
+//        Date today = Calendar.getInstance().getTime();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        String todayStr = sdf.format(today);
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+        //获取当前时间日期
+        final String today = formatter.format(new Date(System.currentTimeMillis()));
+        Log.i(TAG,"date:"+updateDate);
+        if(!today.equals(updateDate)){//不等时才开启，节约资源
+            //开启子线程
+            Thread thread = new Thread(this);//要有this，才能找到run()
+            thread.start();
+        }
 
 
-        //开启子线程
-        Thread thread = new Thread(this);//要有this，才能找到run()
-        thread.start();
 
         handler = new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {//这样就不用单独创建一个类
-                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-                //获取当前时间日期
-                String date0 = formatter.format(new Date(System.currentTimeMillis()));
-                Log.i(TAG,"date:"+date);
-                if(msg.what==5&&!date0.equals(date)){
+                if(msg.what==5){
                     //String str = (String) msg.obj;
                     Bundle bd1 = (Bundle)msg.obj;
                     //Log.i(TAG,"handleMessage : getMessage msg = "+ str);
@@ -81,7 +87,7 @@ public class Rates extends AppCompatActivity implements Runnable{
                     //更新date,保存date和汇率
                     SharedPreferences sharedPreferences = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("date",date0);
+                    editor.putString("update_date",today);
                     editor.putFloat("dollar_rate",dollarRate);
                     editor.putFloat("euro_rate",euroRate);
                     editor.putFloat("won_rate",wonRate);
@@ -133,7 +139,11 @@ public class Rates extends AppCompatActivity implements Runnable{
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.menu_set){
-            openConfig();;
+            openConfig();
+        }else if(item.getItemId()==R.id.open_list){
+            //打开列表窗口
+            Intent list = new Intent(this, RatesListActivity.class);
+            startActivity(list);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -176,7 +186,7 @@ public class Rates extends AppCompatActivity implements Runnable{
             }
         }
         //用于保存获取的汇率
-        Bundle bundle = new Bundle();
+        Bundle bundle;
         //获取网络数据
 //        URL url = null;
 //        try {
@@ -193,6 +203,19 @@ public class Rates extends AppCompatActivity implements Runnable{
 //        }
 
         //
+        bundle = getFromUsdCny();
+        //bundle中保存所获得的汇率
+        //获取Msg对象，用于返回主线程
+        Message msg = handler.obtainMessage(5);
+        //  msg.what = 5;//用于标记当前msg
+        //msg.obj = "Hello from run()";
+        msg.obj = bundle;
+        handler.sendMessage(msg);
+    }
+
+    //从bankofchina获取数据
+    private Bundle getFromUsdCny() {
+        Bundle bundle =new Bundle();
         Document doc = null;
         try {
             doc = Jsoup.connect("https://www.usd-cny.com/bankofchina.htm").get();
@@ -208,8 +231,8 @@ public class Rates extends AppCompatActivity implements Runnable{
             Log.i(TAG,"table1="+table1);
             Elements tds = table1.getElementsByTag("td");
             for(int i=0;i<tds .size();i+=6){
-                Element td1 = tds .get(i);
-                Element td2 = tds .get(i+5);
+                Element td1 = tds .get(i);//币种在每行第一列
+                Element td2 = tds .get(i+5);//汇率在每行第六列
                 Log.i(TAG,"run: " + td1. text() + "==>" + td2. text());//text()和html()都可以,因为这里td之间只有文本
                 String str1 = td1.text();
                 String val = td2.text();
@@ -220,20 +243,14 @@ public class Rates extends AppCompatActivity implements Runnable{
                 }else if("韩元".equals(str1)){
                     bundle.putFloat("won-rate",100f/Float.parseFloat(val));
                 }
-
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //bundle中保存所获得的汇率
-        //获取Msg对象，用于返回主线程
-        Message msg = handler.obtainMessage(5);
-        //  msg.what = 5;//用于标记当前msg
-        //msg.obj = "Hello from run()";
-        msg.obj = bundle;
-        handler.sendMessage(msg);
+        return bundle;
     }
+
     //
     private String inputStream2String(InputStream inputStream) throws IOException {
         final int bufferSize = 1024;
