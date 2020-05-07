@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MyListActivity extends AppCompatActivity {
 
     @Override
+    //利用自己创建的list布局
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_list);
