@@ -19,7 +19,7 @@ public class TempActivity extends AppCompatActivity implements View.OnClickListe
 
         out = findViewById(R.id.textC);//获取控件textC
         inp = findViewById(R.id.textInput);//获取控件textInput
-        Button btn = findViewById(R.id.convert);//获取空间convert
+        Button btn = findViewById(R.id.convert);//获取控件convert
         btn.setOnClickListener(new View.OnClickListener(){//当点击按钮时触发
             @Override
             public void onClick(View v) {

@@ -12,22 +12,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RateCalcActivity"></activity>
-        <activity android:name=".MyList2Activity" />
-        <activity android:name=".MyListActivity" />
-        <activity android:name=".RatesListActivity" />
-        <activity android:name=".SecondActivity" />
-        <activity android:name=".Config" />
-        <activity android:name=".Rates">
+        <activity android:name=".SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Rate2Activity" />
-        <activity android:name=".RateActivity" />
-        <activity android:name=".TempActivity" />
+<!--        <activity android:name=".RateCalcActivity" />-->
+<!--        <activity android:name=".MyList2Activity" />-->
+<!--        <activity android:name=".MyListActivity" />-->
+<!--        <activity android:name=".RatesListActivity" />-->
+<!--        <activity android:name=".SecondActivity" />-->
+<!--        <activity android:name=".Config" />-->
+<!--        <activity android:name=".Rates">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+<!--        <activity android:name=".Rate2Activity" />-->
+<!--        <activity android:name=".RateActivity" />-->
+<!--        <activity android:name=".TempActivity" />-->
     </application>
 
 </manifest>

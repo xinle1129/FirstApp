@@ -136,4 +136,5 @@ public class MyList2Activity extends ListActivity implements Runnable, AdapterVi
 
 
     }
+
 }
