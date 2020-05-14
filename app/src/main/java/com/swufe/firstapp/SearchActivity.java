@@ -125,7 +125,6 @@ public class SearchActivity extends AppCompatActivity implements Runnable,Adapte
         try {
             doc = Jsoup.connect("https://it.swufe.edu.cn/index/tzgg.htm").get();
             Elements lis = doc.getElementsByTag("li");
-            Elements as = doc.getElementsByTag("a");
 //            int i0 = 1;
 //            for(Element table : lis){
 //                Log.i(TAG,"run: a["+i0+"]=" + table.getElementsByTag("a").attr("href"));

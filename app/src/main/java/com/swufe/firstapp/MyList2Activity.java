@@ -1,6 +1,8 @@
 package com.swufe.firstapp;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,9 +25,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MyList2Activity extends ListActivity implements Runnable, AdapterView.OnItemClickListener {
+public class MyList2Activity extends ListActivity implements Runnable, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     Handler handler;
-    private ArrayList<HashMap<String, String>> listItems; // 存放文字、图片信息
+    private List<HashMap<String, String>> listItems; // 存放文字、图片信息
     private SimpleAdapter listItemAdapter; // 适配器
     private int msgWhat = 7;
     final String TAG = "MyList2Activity";
@@ -44,8 +46,8 @@ public class MyList2Activity extends ListActivity implements Runnable, AdapterVi
         handler = new Handler() {
             public void handleMessage(@NonNull Message msg) {
                 if (msg.what == 7) {
-                    List<HashMap<String, String>> list2 = (List<HashMap<String, String>>) msg.obj;
-                    listItemAdapter = new SimpleAdapter(MyList2Activity.this, list2, // listItems数据源
+                    listItems = (List<HashMap<String, String>>) msg.obj;
+                    listItemAdapter = new SimpleAdapter(MyList2Activity.this, listItems, // listItems数据源
                             R.layout.list_item, // ListItem的XML布局实现
                             new String[]{"ItemTitle", "ItemDetail"},
                             new int[]{R.id.itemTitle, R.id.itemDetail}
@@ -62,6 +64,7 @@ public class MyList2Activity extends ListActivity implements Runnable, AdapterVi
 //            }
 //        });
         getListView().setOnItemClickListener(this);//需要继承AdapterView.OnItemClickListener
+        getListView().setOnItemLongClickListener(this);
     }
     private void initListView(){
         listItems = new ArrayList<HashMap<String, String>>();
@@ -137,4 +140,22 @@ public class MyList2Activity extends ListActivity implements Runnable, AdapterVi
 
     }
 
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        Log.i(TAG,"onItemClick: 长按" );
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示").setMessage("请确认是否删除当前数据").setNegativeButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {//由于用的是匿名类，所以只针对posiyiveButton，因此which用不到
+                Log.i(TAG, "onClick: 对话框事件处理");
+                //删除数据，由于不是ArrayAdapter，所以需要修改数据，不能直接用remove
+                listItems.remove(position);//position改成final就可以传递过来了。。？
+                listItemAdapter.notifyDataSetChanged();
+            }
+        })
+                .setPositiveButton("否",null);
+        builder.create().show();
+
+        return true;//true则点击监听失效
+    }
 }
