@@ -12,22 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity">
-        </activity>
-        <activity android:name=".RateCalcActivity" android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".MyList2Activity" />
-        <activity android:name=".MyListActivity" >
-        </activity>
-
-        <activity android:name=".RatesListActivity" />
-        <activity android:name=".SecondActivity" />
-        <activity android:name=".Config" />
-        <activity android:name=".Rates">
+        <activity android:name=".PageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity
+            android:name=".RateCalcActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity android:name=".MyList2Activity" />
+        <activity android:name=".MyListActivity"></activity>
+        <activity android:name=".RatesListActivity" />
+        <activity android:name=".SecondActivity" />
+        <activity android:name=".Config" />
+        <activity android:name=".Rates">
         </activity>
         <activity android:name=".Rate2Activity" />
         <activity android:name=".RateActivity" />
